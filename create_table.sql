@@ -36,21 +36,3 @@ insert into Enrolle (surname, `name`, middle_name, gender, nationality, birthdat
 			18/03/2002,"246000,Belarus,Gomel,Portovaya street,51",364,364),
             ("Korolko","Olga","Yurievna","F","belarussian",
 			23/10/2001,"246000,Belarus,Pinsk,Krasnoflotskaya 8,2",350,328);
-            
-select count(*)
-from Enrolle 
-where passing_score>250;
-
-select sum(CT_rating)
-from Enrolle
-where gender="M";
-
-select max(CT_rating),min(CT_rating)
-from Enrolle;
-
-select Enrolle.*,University.*
-from Enrolle
-inner join University
-on Enrolle.university_id=University.id
-where University.id=3;          
-
