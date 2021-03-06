@@ -14,6 +14,13 @@ create table if not exists Enrolle
     passing_score 	smallint 	unsigned,
     primary key (id)
 );
+create table if not exists University
+(
+	id 				int 		unsigned auto_increment,
+    university_name		varchar(80),
+    university_description		varchar(200),
+    primary key (id)
+);
 
 truncate table Enrolle;
 insert into Enrolle (surname, `name`, middle_name, gender, nationality, birthdate, home_address, CT_rating, passing_score)
@@ -27,6 +34,17 @@ insert into Enrolle (surname, `name`, middle_name, gender, nationality, birthdat
 select count(*)
 from Enrolle 
 where passing_score>250;
-            
 
+select sum(CT_rating)
+from Enrolle
+where gender="M";
+
+select max(CT_rating),min(CT_rating)
+from Enrolle;
+
+select Enrolle.*,University.*
+from Enrolle
+inner join University
+on Enrolle.university_id=University.id
+where University.id=3;          
 
