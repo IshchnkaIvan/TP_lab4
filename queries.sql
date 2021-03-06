@@ -4,8 +4,10 @@ SELECT * FROM enrolle
 WHERE CT_rating > 225;
 
 ALTER TABLE enrolle
-ADD university_id INT 
-FOREIGN KEY (university) REFERENCES university(id);
+ADD university_id INT;
+
+ALTER TABLE enrolle
+ADD FOREIGN KEY (university_id) REFERENCES university(id);
 
 select count(*)
 from Enrolle
