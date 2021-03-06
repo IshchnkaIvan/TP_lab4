@@ -3,11 +3,11 @@ USE enrolle_db;
 SELECT * FROM enrolle
 WHERE CT_rating > 225;
 
--- ALTER TABLE Enrolle
--- ADD university_id INT UNSIGNED;
+ALTER TABLE Enrolle
+ADD university_id INT UNSIGNED;
 
--- alter table Enrolle
--- add FOREIGN KEY (university_id) REFERENCES university(id);
+alter table Enrolle
+add FOREIGN KEY (university_id) REFERENCES university(id);
 
 select enrolle.id, enrolle.surname, enrolle.`name`, enrolle.middle_name, enrolle.birthdate, university.university_name
 from enrolle 
