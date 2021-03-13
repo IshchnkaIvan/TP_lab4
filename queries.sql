@@ -1,10 +1,10 @@
-USE enrolle_db;
+use enrolle_db;
 
-SELECT * FROM enrolle
-WHERE CT_rating > 225;
+select * from enrolle
+where CT_rating > 225;
 
-ALTER TABLE Enrolle
-ADD university_id INT UNSIGNED;
+alter table Enrolle
+add university_id int unsigned;
 
 alter table Enrolle
 add FOREIGN KEY (university_id) REFERENCES university(id);
@@ -16,8 +16,6 @@ left join university ON enrolle.university_id = university.id;
 select count(*)
 from Enrolle 
 where passing_score>250;
-
-
 
 select sum(CT_rating)
 from Enrolle
