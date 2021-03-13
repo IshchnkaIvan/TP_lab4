@@ -1,5 +1,5 @@
 [db_connect]
 host=localhost
-database=db_movies
+database=Enrolle_db
 user=root
 password=6996
