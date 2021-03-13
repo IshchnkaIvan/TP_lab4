@@ -2,7 +2,7 @@ create database if not exists Enrolle_db;
 use Enrolle_db;
 create table if not exists Enrolle
 (
-	id              int          unsigned auto_increment,
+    id              int          unsigned auto_increment,
     surname         varchar(30),
     `name`          varchar(20),
     middle_name     varchar(20),
@@ -16,7 +16,7 @@ create table if not exists Enrolle
 );
 create table if not exists University
 (
-	id                         int          unsigned auto_increment,
+    id                         int          unsigned auto_increment,
     university_name            varchar(80),
     university_description     varchar(200),
     primary key (id)
