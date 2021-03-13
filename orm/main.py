@@ -56,7 +56,7 @@ class ORMConnector:
             self.passing_score = passing_score
             self.university_id = university_id
 
-    def connect(self):
+    def __init__(self):
         self.engine = sqlalchemy.create_engine("mysql+pymysql://root:757020Key@localhost/enrolle_db", echo=None)
         self.Base.metadata.create_all(self.engine)
         Session = sessionmaker(bind=self.engine)
