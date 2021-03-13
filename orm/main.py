@@ -9,6 +9,7 @@ class ORMConnector:
     Base = declarative_base()
     engine: sqlalchemy.engine.Engine = None
     session: sqlalchemy.orm.Session = None
+    metadata = None
 
     class University(Base):
         __tablename__ = "university"
@@ -58,9 +59,11 @@ class ORMConnector:
 
     def __init__(self):
         self.engine = sqlalchemy.create_engine("mysql+pymysql://root:757020Key@localhost/enrolle_db", echo=None)
-        self.Base.metadata.create_all(self.engine)
+        # self.Base.metadata.create_all(self.engine)
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
+        self.metadata = sqlalchemy.MetaData(bind=self.engine)
+        self.metadata.create_all(bind=self.engine)
 
     def count_query(self):
         view = self.session.query(func.count()).filter(self.Enrolle.passing_score > 250).scalar()
