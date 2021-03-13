@@ -1,0 +1,5 @@
+[db_connect]
+host=localhost
+database=db_movies
+user=root
+password=6996
