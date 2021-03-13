@@ -3,13 +3,13 @@ use Enrolle_db;
 create table if not exists Enrolle
 (
     id              int          unsigned auto_increment,
-    surname         varchar(30),
-    `name`          varchar(20),
-    middle_name     varchar(20),
-    gender          varchar(1),
-    nationality     varchar(30),
+    surname         nvarchar(30),
+    `name`          nvarchar(20),
+    middle_name     nvarchar(20),
+    gender          nvarchar(1),
+    nationality     nvarchar(30),
     birthdate       date,
-    home_address    varchar(256),
+    home_address    nvarchar(256),
     CT_rating       smallint     unsigned,
     passing_score   smallint     unsigned,
     primary key (id)
@@ -17,8 +17,8 @@ create table if not exists Enrolle
 create table if not exists University
 (
     id                         int          unsigned auto_increment,
-    university_name            varchar(80),
-    university_description     varchar(200),
+    university_name            nvarchar(80),
+    university_description     nvarchar(200),
     primary key (id)
 );
 
