@@ -30,3 +30,43 @@ class sql_executor:
         finally:
             conn.close()
             cursor.close()
+
+    def count_query(self):
+        result = self.execute_sql_script('''
+                select count(*)
+                from Enrolle 
+                where passing_score>250;
+                ''')
+        return result
+
+    def sum_query(self):
+        result = self.execute_sql_script('''
+                select sum(CT_rating)
+                from Enrolle
+                where gender="F";
+                ''')
+        return result
+
+    def min_max_query(self):
+        result = self.execute_sql_script('''
+                select max(CT_rating),min(CT_rating)
+                from Enrolle;
+                ''')
+        return result
+
+    def join_query(self):
+        result = self.execute_sql_script('''
+                select enrolle.id, enrolle.surname, enrolle.`name`, enrolle.middle_name, enrolle.birthdate, university.university_name
+                from enrolle 
+                left join university ON enrolle.university_id = university.id;
+                ''')
+        return result
+
+    def select_query(self):
+        result = self.execute_sql_script('''
+                select *
+                from enrolle
+                where
+                CT_rating > 225;
+                ''')
+        return result
