@@ -3,6 +3,7 @@ from sqlalchemy import Column, Table, MetaData, ForeignKey, PrimaryKeyConstraint
 from sqlalchemy import Integer, String, DateTime, SmallInteger, func
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
+import pymysql
 
 
 class ORMConnector:
@@ -18,7 +19,7 @@ class ORMConnector:
         university_description = Column(String(200))
 
         def __repr__(self):
-            return "<Enrolle('%s','%s','%s')>" % (self.id, self.university_name, self.university_description)
+            return "('%s','%s','%s')" % (self.id, self.university_name, self.university_description)
 
         def __init__(self, id, name, description):
             self.id = id
@@ -40,7 +41,7 @@ class ORMConnector:
         university_id = Column(Integer, ForeignKey("university.id"))
 
         def __repr__(self):
-            return "<Enrolle('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')" % (
+            return "('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')" % (
                 self.id, self.surname, self.name, self.middle_name, self.gender, self.nationality, self.birthdate,
                 self.home_address, self.CT_rating, self.passing_score, self.university_id)
 
@@ -59,6 +60,7 @@ class ORMConnector:
 
     def __init__(self):
         self.engine = sqlalchemy.create_engine("mysql+pymysql://root:757020Key@localhost/enrolle_db", echo=None)
+        # self.Base = declarative_base()
         # self.Base.metadata.create_all(self.engine)
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
@@ -70,7 +72,7 @@ class ORMConnector:
         return view
 
     def sum_query(self):
-        view = self.session.query(func.sum(self.Enrolle.CT_rating)).filter(self.Enrolle.gender == "M").scalar()
+        view = int(self.session.query(func.sum(self.Enrolle.CT_rating)).filter(self.Enrolle.gender == "M").scalar())
         return view
 
     def min_max_query(self):
@@ -85,5 +87,9 @@ class ORMConnector:
         return view
 
     def select_query(self):
-        view = self.session.query(self.Enrolle).filter(self.Enrolle.passing_score > 225)
+        view = self.session.query(self.Enrolle).filter(self.Enrolle.passing_score > 225).all()
         return view
+
+
+if __name__=="__main__":
+    print(ORMConnector().select_query())

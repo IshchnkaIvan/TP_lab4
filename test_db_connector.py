@@ -1,7 +1,8 @@
 from unittest import TestCase
 import db_connector
 
-class Testsql_executor(TestCase):
+
+class TestsqlExecutor(TestCase):
     def test_execute_sql_script(self):
         cursor = db_connector.sql_executor('configs.txt')
         cursor.execute_sql_script('''drop table if exists enrolle;''')
@@ -33,5 +34,4 @@ class Testsql_executor(TestCase):
         select sum(CT_rating)
         from Enrolle
         where gender="F";''')
-        self.assertEqual(int(result[0][0]),350)
-
+        self.assertEqual(int(result[0][0]), 350)
