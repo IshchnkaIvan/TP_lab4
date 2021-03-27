@@ -2,12 +2,11 @@ import sqlalchemy
 from sqlalchemy import Column, Table, MetaData, ForeignKey, PrimaryKeyConstraint
 from sqlalchemy import Integer, String, DateTime, SmallInteger, func
 from sqlalchemy.orm import relationship, sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
 import pymysql
+from init import Base
 
 
 class ORMConnector:
-    Base = declarative_base()
     engine: sqlalchemy.engine.Engine = None
     session: sqlalchemy.orm.Session = None
     metadata = None
@@ -41,7 +40,7 @@ class ORMConnector:
         university_id = Column(Integer, ForeignKey("university.id"))
 
         def __repr__(self):
-            return "('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')" % (
+            return "('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (
                 self.id, self.surname, self.name, self.middle_name, self.gender, self.nationality, self.birthdate,
                 self.home_address, self.CT_rating, self.passing_score, self.university_id)
 
@@ -60,12 +59,16 @@ class ORMConnector:
 
     def __init__(self):
         self.engine = sqlalchemy.create_engine("mysql+pymysql://root:757020Key@localhost/enrolle_db", echo=None)
-        # self.Base = declarative_base()
-        # self.Base.metadata.create_all(self.engine)
         Session = sessionmaker(bind=self.engine)
         self.session = Session()
         self.metadata = sqlalchemy.MetaData(bind=self.engine)
         self.metadata.create_all(bind=self.engine)
+        self.session.add_all((self.Enrolle('Belevich', 'Mikhail', 'Andreevich', 'M', 'belarussian', '0000-00-00',
+                                           '246000,Belarus,Gomel,International street,15,7', 382, 364, None),
+                              self.Enrolle('Ishchenko', 'Ivan', 'Sergeevich', 'M', 'belarussian', '0000-00-00',
+                                           '246000,Belarus,Gomel,Portovaya street,51', 364, 364, None),
+                              self.Enrolle('Korolko', 'Olga', 'Yurievna', 'F', 'belarussian', '0000-00-00',
+                                           '246000,Belarus,Pinsk,Krasnoflotskaya 8,2', 350, 328, None)))
 
     def count_query(self):
         view = self.session.query(func.count()).filter(self.Enrolle.passing_score > 250).scalar()
@@ -89,7 +92,3 @@ class ORMConnector:
     def select_query(self):
         view = self.session.query(self.Enrolle).filter(self.Enrolle.passing_score > 225).all()
         return view
-
-
-if __name__=="__main__":
-    print(ORMConnector().select_query())
