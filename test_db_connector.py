@@ -36,6 +36,8 @@ class TestsqlExecutor(TestCase):
         select sum(CT_rating)
         from Enrolle
         where gender="F";''')
+        cursor.execute_sql_script('''alter table Enrolle
+                                     add university_id int unsigned;''')
         self.assertEqual(int(result[0][0]), 350)
 
 class TestDbConnector(TestCase):
@@ -94,3 +96,8 @@ class TestDbConnector(TestCase):
               328,
               None)]
         self.assertEqual(cursor.select_query(), result)
+
+    def test_select_all(self):
+        cursor = sql_executor('configs.txt')
+        self.assertEqual(cursor.select_all(), [])
+

@@ -70,3 +70,13 @@ class sql_executor:
                 CT_rating > 225;
                 ''')
         return result
+
+    def select_all(self):
+        result = self.execute_sql_script('''
+                select Enrolle.*,University.*
+                from Enrolle
+                inner join University
+                on Enrolle.university_id=University.id
+                where University.id=3;    
+                ''')
+        return result
