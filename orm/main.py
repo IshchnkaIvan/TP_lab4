@@ -70,25 +70,25 @@ class ORMConnector:
                               self.Enrolle('Korolko', 'Olga', 'Yurievna', 'F', 'belarussian', '0000-00-00',
                                            '246000,Belarus,Pinsk,Krasnoflotskaya 8,2', 350, 328, None)))
 
-    def count_query(self):
+    def count_query(self) -> int:
         view = self.session.query(func.count()).filter(self.Enrolle.passing_score > 250).scalar()
         return view
 
-    def sum_query(self):
+    def sum_query(self) -> int:
         view = int(self.session.query(func.sum(self.Enrolle.CT_rating)).filter(self.Enrolle.gender == "M").scalar())
         return view
 
-    def min_max_query(self):
+    def min_max_query(self) -> tuple[int, int]:
         view = self.session.query(func.max(self.Enrolle.CT_rating), func.min(self.Enrolle.CT_rating)).all()
         for min_val, max_val in view:
             return min_val, max_val
 
-    def join_query(self):
+    def join_query(self) -> list[str]:
         view = self.session.query(self.Enrolle, self.University).join(self.University,
                                                                       self.Enrolle.university_id == self.University.id).filter(
             self.University.id == 3).all()
         return view
 
-    def select_query(self):
+    def select_query(self) -> list[str]:
         view = self.session.query(self.Enrolle).filter(self.Enrolle.passing_score > 225).all()
         return view
