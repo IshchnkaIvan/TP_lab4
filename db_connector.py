@@ -16,7 +16,7 @@ class sql_executor:
                                        password=config['db_connect']['password'])
         return conn
 
-    def execute_sql_script(self, query: str) -> list[tuple[]]:
+    def execute_sql_script(self, query: str) -> list[tuple]:
         try:
             conn = self.__db_connect()
             cursor = conn.cursor()
