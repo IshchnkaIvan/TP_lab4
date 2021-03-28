@@ -2,7 +2,7 @@ import mysql.connector
 import configparser
 
 
-class sql_executor:
+class SqlExecutor:
 
     def __init__(self, configs_file_name: str) -> None:
         self.configs_file_name = configs_file_name

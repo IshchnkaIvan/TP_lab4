@@ -1,12 +1,12 @@
 from unittest import TestCase
 
 import db_connector
-from db_connector import sql_executor
+from db_connector import SqlExecutor
 
 
 class TestsqlExecutor(TestCase):
     def test_execute_sql_script(self):
-        cursor = db_connector.sql_executor('configs.txt')
+        cursor = db_connector.SqlExecutor('configs.txt')
         cursor.execute_sql_script('''drop table if exists enrolle;''')
         cursor.execute_sql_script('''
         create table if not exists Enrolle
@@ -43,25 +43,25 @@ class TestsqlExecutor(TestCase):
 class TestDbConnector(TestCase):
 
     def test_count_query(self):
-        cursor = sql_executor('configs.txt')
+        cursor = SqlExecutor('configs.txt')
         self.assertEqual(cursor.count_query()[0][0], 3)
 
     def test_min_max_query(self):
-        cursor = sql_executor('configs.txt')
+        cursor = SqlExecutor('configs.txt')
         self.assertEqual(cursor.min_max_query()[0], (382, 350))
 
     def test_sum_query(self):
-        cursor = sql_executor('configs.txt')
+        cursor = SqlExecutor('configs.txt')
         self.assertEqual(cursor.sum_query()[0][0], 350)
 
     def test_join_query(self):
-        cursor = sql_executor('configs.txt')
+        cursor = SqlExecutor('configs.txt')
         self.assertEqual(cursor.join_query(), [(1, 'Belevich', 'Mikhail', 'Andreevich', None, None),
                 (2, 'Ishchenko', 'Ivan', 'Sergeevich', None, None),
                 (3, 'Korolko', 'Olga', 'Yurievna', None, None)])
 
     def test_select_query(self):
-        cursor = sql_executor('configs.txt')
+        cursor = SqlExecutor('configs.txt')
         result = [(1,
               'Belevich',
               'Mikhail',
@@ -98,6 +98,6 @@ class TestDbConnector(TestCase):
         self.assertEqual(cursor.select_query(), result)
 
     def test_select_all(self):
-        cursor = sql_executor('configs.txt')
+        cursor = SqlExecutor('configs.txt')
         self.assertEqual(cursor.select_all(), [])
 
