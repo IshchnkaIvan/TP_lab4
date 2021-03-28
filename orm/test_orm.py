@@ -1,9 +1,9 @@
 from unittest import TestCase
-import main
+import orm_connector
 
 
 class TestEnrolle(TestCase):
-    connector = main.ORMConnector()
+    connector = orm_connector.ORMConnector()
 
     def test_count_query(self):
         self.assertEqual(self.connector.count_query(), 3)
