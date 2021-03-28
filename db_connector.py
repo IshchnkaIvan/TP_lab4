@@ -2,12 +2,12 @@ import mysql.connector
 import configparser
 
 
-class sql_executor:
+class SqlExecutor:
 
     def __init__(self, configs_file_name: str) -> None:
         self.configs_file_name = configs_file_name
 
-    def __db_connect(self) -> None:
+    def __db_connect(self) -> mysql.connector:
         config = configparser.ConfigParser()
         config.read(self.configs_file_name)
         conn = mysql.connector.connect(host=config['db_connect']['host'],
@@ -16,7 +16,7 @@ class sql_executor:
                                        password=config['db_connect']['password'])
         return conn
 
-    def execute_sql_script(self, query: str) -> None:
+    def execute_sql_script(self, query: str) -> list[tuple]:
         try:
             conn = self.__db_connect()
             cursor = conn.cursor()
@@ -31,7 +31,7 @@ class sql_executor:
             conn.close()
             cursor.close()
 
-    def count_query(self):
+    def count_query(self) -> list[tuple[int]]:
         result = self.execute_sql_script('''
                 select count(*)
                 from Enrolle 
@@ -39,7 +39,7 @@ class sql_executor:
                 ''')
         return result
 
-    def sum_query(self):
+    def sum_query(self) -> list[tuple[int]]:
         result = self.execute_sql_script('''
                 select sum(CT_rating)
                 from Enrolle
@@ -47,14 +47,14 @@ class sql_executor:
                 ''')
         return result
 
-    def min_max_query(self):
+    def min_max_query(self) -> list[tuple[int, int]]:
         result = self.execute_sql_script('''
                 select max(CT_rating),min(CT_rating)
                 from Enrolle;
                 ''')
         return result
 
-    def join_query(self):
+    def join_query(self) -> list[tuple[int, str, str, str, str, str]]:
         result = self.execute_sql_script('''
                 select enrolle.id, enrolle.surname, enrolle.`name`, enrolle.middle_name, enrolle.birthdate, university.university_name
                 from enrolle 
@@ -62,7 +62,7 @@ class sql_executor:
                 ''')
         return result
 
-    def select_query(self):
+    def select_query(self) -> list[tuple[int, str, str, str, str, str, str, str, int, int, str]]:
         result = self.execute_sql_script('''
                 select *
                 from enrolle
@@ -71,7 +71,7 @@ class sql_executor:
                 ''')
         return result
 
-    def select_all(self):
+    def select_all(self) -> list[tuple[int, str, str, str, str, str, str, str, int, int, str, str, str]]:
         result = self.execute_sql_script('''
                 select Enrolle.*,University.*
                 from Enrolle
