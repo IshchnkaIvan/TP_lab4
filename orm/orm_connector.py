@@ -1,14 +1,15 @@
 import sqlalchemy
 from sqlalchemy import Column, Table, MetaData, ForeignKey, PrimaryKeyConstraint
 from sqlalchemy import Integer, String, DateTime, SmallInteger, func
-from sqlalchemy.orm import relationship, sessionmaker
+from sqlalchemy.orm import relationship, sessionmaker,Session
 import pymysql
+from sqlalchemy.sql import Engine
 from init import Base
 
 
 class ORMConnector:
-    engine: sqlalchemy.engine.Engine = None
-    session: sqlalchemy.orm.Session = None
+    engine: Engine = None
+    session: Session = None
     metadata = None
 
     class University(Base):
