@@ -10,7 +10,7 @@ from init import Base
 class ORMConnector:
     engine: Engine = None
     session: Session = None
-    metadata = None
+    metadata:MetaData = None
 
     class University(Base):
         __tablename__ = "university"
@@ -84,12 +84,12 @@ class ORMConnector:
         for min_val, max_val in view:
             return min_val, max_val
 
-    def join_query(self) -> list[str]:
+    def join_query(self) -> list[Enrolle]:
         view = self.session.query(self.Enrolle, self.University).join(self.University,
                                                                       self.Enrolle.university_id == self.University.id).filter(
             self.University.id == 3).all()
         return view
 
-    def select_query(self) -> list[str]:
+    def select_query(self) -> list[Enrolle]:
         view = self.session.query(self.Enrolle).filter(self.Enrolle.passing_score > 225).all()
         return view
