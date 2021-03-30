@@ -28,6 +28,17 @@ class Enrolle:
         return str((self.id, self.surname, self.name, self.middle_name, self.gender, self.nationality, self.birthdate,
                     self.home_address, self.CT_rating, self.passing_score, self.university_id))
 
+    def __eq__(self, other):
+        if type(self) == type(other):
+            return self.id == other.id and self.surname == other.surname and self.name == other.name and \
+                    self.middle_name == other.middle_name and self.gender == other.gender and \
+                    self.nationality == other.nationality and \
+                    self.birthdate == other.birthdate and self.home_address == other.home_address and \
+                    self.CT_rating == other.CT_rating and self.passing_score == other.passing_score and \
+                    self.university_id == other.university_id
+        else:
+            raise TypeError
+
 
 class University:
 
@@ -39,6 +50,12 @@ class University:
     def __repr__(self):
         return str((self.id, self.university_name, self.university_description))
 
+    def __eq__(self, other):
+        if type(self) == type(other):
+            return self.id == other.id and self.university_name == other.university_name and \
+                   self.university_description == other.university_description
+        else:
+            raise TypeError
 
 class SqlExecutor:
 
@@ -101,7 +118,7 @@ class SqlExecutor:
             left join university ON enrolle.university_id = university.id;
             ''')
         enrolles = [Enrolle(id=id, surname=surname, name=name, middle_name=middle_name, birthdate=birthdate,
-                            university_id=university_id) for id, surname, name, middle_name, birthdate, university_id in
+                    university_id=university_id) for id, surname, name, middle_name, birthdate, university_id in
                     result]
         return enrolles
 
